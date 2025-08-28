@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理者ダッシュボード</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-page">
+    <header class="main-header">
+        <div class="logo">ファイナンスアプリ - 管理者</div>
+        <nav class="main-nav">
+            <button id="home-btn" class="nav-btn">管理者ダッシュボード</button>
+            <button id="logout-btn" class="nav-btn logout">ログアウト</button>
+        </nav>
+    </header>
+
+    <main class="reports-container">
+        <h1>管理者ダッシュボード</h1>
+        
+        <!-- User Management Section -->
+        <section class="admin-section">
+            <h2>ユーザー管理</h2>
+            <div class="controls-container">
+                <input type="text" id="user-search-bar" placeholder="ユーザーのメールアドレスで検索…">
+            </div>
+            <div class="table-container">
+                <table id="users-table">
+                    <thead>
+                        <tr>
+                            <th class="title">ユーザーID</th>
+                            <th class="title">メールアドレス</th>
+                            <th class="title">管理者か？</th>
+                            <th class="title">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- All Receipts Section -->
+        <section class="admin-section">
+            <h2>すべての領収書</h2>
+            <div class="controls-container">
+                <input type="text" id="receipt-search-bar" placeholder="販売者名で検索…">
+            </div>
+            <div class="table-container">
+                <table id="all-receipts-table">
+                    <thead>
+                        <tr>
+                            <th class="title">領収書ID</th>
+                            <th class="title">所有者メール</th>
+                            <th class="title">販売者名</th>
+                            <th class="title">カテゴリ</th>
+                            <th class="title">アップロード日</th>
+                        </tr>
+                    </thead>
+                    <tbody id="all-receipts-table-body">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

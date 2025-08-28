@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ファイナンスアシスタントへようこそ!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">ファイナンスアプリ</div>
+        <nav class="main-nav">
+            <button id="register-nav-btn" class="nav-btn">登録</button>
+            <button id="admin-nav-btn" class="nav-btn">管理者</button>
+        </nav>
+    </header>
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>領収書を撮って、<br>支出を管理しよう!</h1>
+                <button id="login-hero-btn" class="hero-btn">ログイン</button>
+            </div>
+        </section>
+    </main>
+    <!-- Login Modal Structure -->
+    <div id="login-modal-overlay" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>ログイン</h2>
+            <form id="login-form" class="modal-form">
+                <input type="email" id="login-email" placeholder="ユーザー名" required>
+                <input type="password" id="login-password" placeholder="パスワード" required>
+                <button type="submit">ログイン</button>
+            </form>
+        </div>
+    </div>
+    <!-- Register Modal Structure -->
+    <div id="register-modal-overlay" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>登録</h2>
+            <form id="register-form" class="modal-form">
+                <input type="email" id="register-email" placeholder="ユーザー名" required>
+                <input type="password" id="register-password" placeholder="パスワード" required>
+                <input type="password" id="register-re-password" placeholder="パスワードを再入力" required>
+                <button type="submit">登録</button>
+            </form>
+        </div>
+    </div>
+    <!-- NEW ADMIN MODAL STRUCTURE -->
+    <div id="admin-modal-overlay" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>管理者ログイン</h2>
+            <form id="admin-form" class="modal-form">
+                <input type="text" id="admin-username" placeholder="ユーザー名" required>
+                <input type="password" id="admin-password" placeholder="パスワード" required>
+                <button type="submit">管理者としてログイン</button>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

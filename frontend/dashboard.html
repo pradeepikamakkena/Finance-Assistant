@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ダッシュボード</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">ファイナンスアプリ</div>
+        <nav class="main-nav">
+            <button id="home-btn" class="nav-btn">ホーム</button>
+            <button id="prev-page-btn" class="nav-btn">前のページ</button>
+            <button id="logout-btn" class="nav-btn logout">ログアウト</button>
+        </nav>
+    </header>
+    <main class="dashboard-grid">
+        <!-- Left Column -->
+        <div class="dashboard-column-left">
+            <!--Upload a Bill-->
+            <section class="grid-item card" id="upload-card">
+                <h2>新しい領収書をアップロード🧾</h2>
+                <form id="dashboard-upload-form">
+                    <input type="file" id="dashboard-receipt-file" required style="display:none;">
+                    <label for="dashboard-receipt-file" class="custom-file-upload">
+                        ファイルを選択
+                    </label>
+                    <span id="file-name">ファイルが選択されていません</span>
+                    <button type="submit" id="dashboard-upload-btn">アップロードして処理</button>
+                    <div id="dashboard-upload-result"></div>
+                </form>
+            </section>
+            <!--Reports page-->
+            <section class="grid-item card" id="reports-card">
+                <h2>レポートを表示／ダウンロード📁</h2>
+                <p>すべての領収書を検索・ダウンロードできる完全な一覧表</p>
+                <button id="view-all-btn" class="btn">領収書をすべて表示</button>
+            </section>
+            <!--Recent activity-->
+            <section class="grid-item card" id="activity-card">
+                <h2>最近のアクティビティ📜</h2>
+                <div id="recent-activity-list"></div>
+            </section>
+        </div>
+        <!-- Right Column with Consolidated Dashboard -->
+        <div class="dashboard-column-right">
+            <section class="grid-item card" id="spending-dashboard-card">
+                <h2>
+                    支出ダッシュボード📊
+                    <button id="fullscreen-btn">⛶</button>
+                </h2>
+                <!-- KPI Row -->
+                <div class="kpi-row">
+                    <div class="kpi-card">
+                        <h3>総支出額</h3>
+                        <p id="total-spend-kpi">¥0.00</p>
+                    </div>
+                    <div class="kpi-card">
+                        <h3>総税額</h3>
+                        <p id="total-tax-kpi">¥0.00</p>
+                    </div>
+                    <div class="kpi-card">
+                        <h3>アップロードした領収書の合計</h3>
+                        <p id="total-bills-kpi">0</p>
+                    </div>
+                </div>
+                <!-- Main Content Area -->
+                <div class="dashboard-main-content">
+                    <div class="dashboard-main-left">
+                        <div class="chart-container" id="pie-chart-container">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                        <div class="card date-filter-card">
+                            <h3>日付フィルター</h3>
+                            <div class="date-inputs">
+                                <label for="start-date">開始日:</label>
+                                <input type="date" id="start-date">
+                                <label for="end-date">開始日:</label>
+                                <input type="date" id="end-date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-main-right">
+                        <div class="chart-container" id="bar-chart-container">
+                            <canvas id="timeSeriesChart"></canvas>
+                        </div>
+                        <div class="card top-items-card">
+                            <h3>トップ10商品</h3>
+                            <div id="top-items-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

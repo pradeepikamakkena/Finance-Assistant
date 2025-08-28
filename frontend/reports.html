@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>すべてのレポート</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">ファイナンスアプリ</div>
+        <nav class="main-nav">
+            <button id="home-btn" class="nav-btn">ホーム</button>
+            <button id="prev-page-btn" class="nav-btn">前のページ</button>
+            <button id="logout-btn" class="nav-btn logout">ログアウト</button>
+        </nav>
+    </header>
+
+    <main class="reports-container">
+        <h1>すべての領収書</h1>
+        
+        <div class="controls-container">
+            <input type="text" id="search-bar" placeholder="販売者名で検索...">
+            <button id="download-csv-btn">CSVとしてダウンロード</button>
+        </div>
+
+        <div class="table-container">
+            <table id="receipts-table">
+                <thead>
+                    <tr>
+                        <th class="title">販売者名</th>
+                        <th class="title">カテゴリ</th>
+                        <th class="title">領収日</th>
+                        <th class="title">アップロード日/th>
+                        <th class="title">合計金額</th>
+                        <th class="title">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="receipts-table-body">
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
