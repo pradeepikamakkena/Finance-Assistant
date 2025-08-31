@@ -2,11 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const API_URL = 'http://127.0.0.1:8000';
     const userToken = localStorage.getItem('userToken');
 
+    // --- PAGE DETECTION ---
     const isDashboardPage = window.location.pathname.includes('dashboard.html');
     const isReportsPage = window.location.pathname.includes('reports.html');
     const isAdminPage = window.location.pathname.includes('admin.html');
     const isIndexPage = !isDashboardPage && !isReportsPage && !isAdminPage;
 
+    // --- PAGE PROTECTION ---
     if ((isDashboardPage || isReportsPage || isAdminPage) && !userToken) {
         window.location.href = 'index.html';
         return;
@@ -16,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    // --- GLOBAL EVENT HANDLERS ---
     function handleLogout() {
         localStorage.removeItem('userToken');
         localStorage.removeItem('userEmail');
@@ -31,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (prevPageBtn) prevPageBtn.addEventListener('click', () => window.history.back());
 
 
-    // --- LOGIC FOR INDEX.HTML(Landing Page) ---
+    // --- LOGIC FOR INDEX.HTML (Landing Page) ---
     if (isIndexPage) {
         const loginHeroBtn = document.getElementById('login-hero-btn');
         const registerNavBtn = document.getElementById('register-nav-btn');
@@ -114,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const viewAllBtn = document.getElementById('view-all-btn');
         if (viewAllBtn) viewAllBtn.addEventListener('click', () => window.location.href = 'reports.html');
         
-        // --- FULLSCREEN LOGIC ---
         const spendingCard = document.getElementById("spending-dashboard-card");
         const fullscreenBtn = document.getElementById("fullscreen-btn");
         if (fullscreenBtn && spendingCard) {
@@ -135,8 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const recentActivityList = document.getElementById('recent-activity-list');
         const startDateInput = document.getElementById('start-date');
         const endDateInput = document.getElementById('end-date');
-
-        // --- FILE INPUT NAME DISPLAY ---
         const fileInput = document.getElementById('dashboard-receipt-file');
         const fileNameSpan = document.getElementById('file-name');
 
@@ -158,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (startDate && endDate) {
                 queryParams = `?start_date=${startDate}&end_date=${endDate}`;
             }
-
             try {
                 const [kpiRes, categoryRes, timeRes, topItemsRes] = await Promise.all([
                     fetch(`${API_URL}/api/dashboard/kpis${queryParams}`, { headers: { 'Authorization': `Bearer ${userToken}` }}),
@@ -185,18 +184,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error("ダッシュボード取得エラー:", error);
             }
         }
-        // Function to draw the "Spending by Category" pie chart
+
         function renderCategoryChart(chartData) {
             const categoryTranslations = {
-                "Groceries": "食料品",
-                "Dining Out": "外食",
-                "Shopping": "ショッピング",
-                "Fuel": "燃料",
-                "Entertainment": "エンターテイメント",
-                "Travel": "旅行",
-                "Utilities": "光熱費",
-                "Online Shopping" : "オンラインショッピング",
-                "Other": "その他"
+                "Groceries": "食料品", "Dining Out": "外食", "Shopping": "ショッピング",
+                "Fuel": "燃料", "Entertainment": "エンターテイメント", "Travel": "旅行",
+                "Utilities": "光熱費", "Online Shopping" : "オンラインショッピング", "Other": "その他"
             };
             const labels = chartData.map(item => categoryTranslations[item.label] || item.label);
             const values = chartData.map(item => item.value);
@@ -278,7 +271,6 @@ document.addEventListener('DOMContentLoaded', () => {
             uploadResult.innerHTML = '';
             uploadButton.disabled = true;
             uploadButton.textContent = '処理中…';
-            const fileInput = document.getElementById('dashboard-receipt-file');
             const file = fileInput.files[0];
             if (!file) {
                 uploadResult.textContent = 'ファイルを選択してください。';
@@ -335,22 +327,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function renderTable(receipts) {
+            const categoryTranslations = {
+                "Groceries": "食料品", "Dining Out": "外食", "Shopping": "ショッピング",
+                "Fuel": "燃料", "Entertainment": "エンターテイメント", "Travel": "旅行",
+                "Utilities": "光熱費", "Online Shopping": "オンラインショッピング", "Other": "その他"
+            };
             if (receipts.length === 0) {
                 tableBody.innerHTML = '<tr><td colspan="6">レシートが見つかりません。</td></tr>';
                 return;
             }
-            tableBody.innerHTML = receipts.map(receipt => `
-                <tr data-receipt-id="${receipt.id}">
-                    <td>${receipt.seller_name}</td>
-                    <td>${receipt.category}</td>
-                    <td>${new Date(receipt.receipt_date).toLocaleDateString()}</td>
-                    <td>${new Date(receipt.upload_date).toLocaleDateString()}</td>
-                    <td>${receipt.total_amount.toFixed(2)}</td>
-                    <td>
-                        <button class="delete-btn" data-id="${receipt.id}">削除</button>
-                    </td>
-                </tr>
-            `).join('');
+            tableBody.innerHTML = receipts.map(receipt => {
+                const translatedCategory = categoryTranslations[receipt.category] || receipt.category;
+                return `
+                    <tr data-receipt-id="${receipt.id}">
+                        <td>${receipt.seller_name}</td>
+                        <td>${translatedCategory}</td>
+                        <td>${new Date(receipt.receipt_date).toLocaleDateString()}</td>
+                        <td>${new Date(receipt.upload_date).toLocaleDateString()}</td>
+                        <td>${receipt.total_amount.toFixed(2)}</td>
+                        <td>
+                            <button class="delete-btn" data-id="${receipt.id}">削除</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
         
         async function handleDelete(receiptId) {
@@ -456,7 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <tr data-user-id="${user.id}">
                     <td>${user.id}</td>
                     <td>${user.email}</td>
-                    <td>${user.is_admin ? 'Yes' : 'No'}</td>
+                    <td>${user.is_admin ? '〇' : '✕'}</td>
                     <td>
                         <button class="delete-btn" data-id="${user.id}" ${user.is_admin ? 'disabled' : ''}>削除</button>
                     </td>
@@ -476,6 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${receipt.seller_name}</td>
                     <td>${receipt.category}</td>
                     <td>${new Date(receipt.upload_date).toLocaleDateString()}</td>
+                    <td>${receipt.total_amount.toFixed(2)}</td>
                 </tr>
             `).join('');
         }
