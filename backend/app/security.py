@@ -1,6 +1,10 @@
+import os
+from dotenv import load_dotenv
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
+
+load_dotenv() 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -10,7 +14,7 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return pwd_context.hash(password)
 
-SECRET_KEY = "YOUR_SUPER_SECRET_KEY"
+SECRET_KEY = os.getenv("SECRET_KEY") 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
